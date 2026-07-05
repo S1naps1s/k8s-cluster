@@ -1,0 +1,636 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/restartedAt: "2026-07-05T21:42:42Z"
+    creationTimestamp: "2026-07-05T21:45:11Z"
+    generateName: twingate-connector-fcd85fb47-
+    generation: 1
+    labels:
+      app: twingate-connector
+      pod-template-hash: fcd85fb47
+    name: twingate-connector-fcd85fb47-65gw4
+    namespace: twingate
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: twingate-connector-fcd85fb47
+      uid: d4209429-c2ff-46f4-b357-0326a8cf0937
+    resourceVersion: "25538655"
+    uid: 4a17d92b-1678-45ba-977f-b6c813785704
+  spec:
+    containers:
+    - env:
+      - name: TWINGATE_ACCESS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: TWINGATE_ACCESS_TOKEN
+            name: twingate-connector-tokens
+      - name: TWINGATE_REFRESH_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: TWINGATE_REFRESH_TOKEN
+            name: twingate-connector-tokens
+      - name: TWINGATE_NETWORK
+        valueFrom:
+          secretKeyRef:
+            key: TWINGATE_NETWORK
+            name: twingate-connector-tokens
+      - name: TWINGATE_LOG_LEVEL
+        value: "3"
+      image: twingate/connector:1.88.0
+      imagePullPolicy: Always
+      name: twingate-connector
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xs9b8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: pi3-worker
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-xs9b8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T21:45:22Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T21:45:11Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T21:45:22Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T21:45:22Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T21:45:11Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://7ac7b30931db1f001939b2674ce83caa29c34f58c3210a182c765830f1bb8d57
+      image: docker.io/twingate/connector:1.88.0
+      imageID: docker.io/twingate/connector@sha256:7b366b2bdabbed7e8f51f4019f3b932c50078aaf021569b42be49160caab16ec
+      lastState: {}
+      name: twingate-connector
+      ready: true
+      resources: {}
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-07-05T21:45:21Z"
+      user:
+        linux:
+          gid: 65532
+          supplementalGroups:
+          - 65532
+          uid: 65532
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xs9b8
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.1.107
+    hostIPs:
+    - ip: 192.168.1.107
+    phase: Running
+    podIP: 10.42.2.102
+    podIPs:
+    - ip: 10.42.2.102
+    qosClass: BestEffort
+    startTime: "2026-07-05T21:45:11Z"
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "5"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"twingate-connector","namespace":"twingate"},"spec":{"replicas":2,"selector":{"matchLabels":{"app":"twingate-connector"}},"template":{"metadata":{"labels":{"app":"twingate-connector"}},"spec":{"containers":[{"env":[{"name":"TWINGATE_ACCESS_TOKEN","valueFrom":{"secretKeyRef":{"key":"TWINGATE_ACCESS_TOKEN","name":"twingate-connector-tokens"}}},{"name":"TWINGATE_REFRESH_TOKEN","valueFrom":{"secretKeyRef":{"key":"TWINGATE_REFRESH_TOKEN","name":"twingate-connector-tokens"}}},{"name":"TWINGATE_NETWORK","valueFrom":{"secretKeyRef":{"key":"TWINGATE_NETWORK","name":"twingate-connector-tokens"}}},{"name":"TWINGATE_LOG_LEVEL","value":"3"}],"image":"twingate/connector:latest","name":"twingate-connector","securityContext":{"capabilities":{"add":["NET_ADMIN"]}}}]}}}}
+    creationTimestamp: "2025-12-30T18:25:49Z"
+    generation: 6
+    name: twingate-connector
+    namespace: twingate
+    resourceVersion: "25538665"
+    uid: f065e23c-8df8-4e30-bfde-5a14ce1fcb7d
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: twingate-connector
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T21:42:42Z"
+        creationTimestamp: null
+        labels:
+          app: twingate-connector
+      spec:
+        containers:
+        - env:
+          - name: TWINGATE_ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_ACCESS_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_REFRESH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_REFRESH_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_NETWORK
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_NETWORK
+                name: twingate-connector-tokens
+          - name: TWINGATE_LOG_LEVEL
+            value: "3"
+          image: twingate/connector:1.88.0
+          imagePullPolicy: Always
+          name: twingate-connector
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-05T21:40:08Z"
+      lastUpdateTime: "2026-07-05T21:40:08Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-30T18:25:49Z"
+      lastUpdateTime: "2026-07-05T21:45:22Z"
+      message: ReplicaSet "twingate-connector-fcd85fb47" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 6
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-30T18:25:49Z"
+    generation: 3
+    labels:
+      app: twingate-connector
+      pod-template-hash: 754795b7c
+    name: twingate-connector-754795b7c
+    namespace: twingate
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: twingate-connector
+      uid: f065e23c-8df8-4e30-bfde-5a14ce1fcb7d
+    resourceVersion: "25537932"
+    uid: 54c5006f-3475-4489-bcf3-c62ff5a0618c
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: twingate-connector
+        pod-template-hash: 754795b7c
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: twingate-connector
+          pod-template-hash: 754795b7c
+      spec:
+        containers:
+        - env:
+          - name: TWINGATE_ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_ACCESS_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_REFRESH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_REFRESH_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_NETWORK
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_NETWORK
+                name: twingate-connector-tokens
+          - name: TWINGATE_LOG_LEVEL
+            value: "3"
+          image: twingate/connector:latest
+          imagePullPolicy: Always
+          name: twingate-connector
+          resources: {}
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 3
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2026-07-05T21:35:37Z"
+    generation: 4
+    labels:
+      app: twingate-connector
+      pod-template-hash: 7947b577c5
+    name: twingate-connector-7947b577c5
+    namespace: twingate
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: twingate-connector
+      uid: f065e23c-8df8-4e30-bfde-5a14ce1fcb7d
+    resourceVersion: "25538140"
+    uid: abf83136-af62-4480-977b-10a5659919ab
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: twingate-connector
+        pod-template-hash: 7947b577c5
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: twingate-connector
+          pod-template-hash: 7947b577c5
+      spec:
+        containers:
+        - env:
+          - name: TWINGATE_ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_ACCESS_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_REFRESH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_REFRESH_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_NETWORK
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_NETWORK
+                name: twingate-connector-tokens
+          - name: TWINGATE_LOG_LEVEL
+            value: "3"
+          image: twingate/connector:latest
+          imagePullPolicy: Always
+          name: twingate-connector
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 4
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2026-07-05T21:40:03Z"
+    generation: 5
+    labels:
+      app: twingate-connector
+      pod-template-hash: 7987d9d6bf
+    name: twingate-connector-7987d9d6bf
+    namespace: twingate
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: twingate-connector
+      uid: f065e23c-8df8-4e30-bfde-5a14ce1fcb7d
+    resourceVersion: "25538664"
+    uid: 9aa2f46c-b81f-40fa-aacf-2178074e8358
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: twingate-connector
+        pod-template-hash: 7987d9d6bf
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: twingate-connector
+          pod-template-hash: 7987d9d6bf
+      spec:
+        containers:
+        - env:
+          - name: TWINGATE_ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_ACCESS_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_REFRESH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_REFRESH_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_NETWORK
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_NETWORK
+                name: twingate-connector-tokens
+          - name: TWINGATE_LOG_LEVEL
+            value: "3"
+          image: twingate/connector:1
+          imagePullPolicy: Always
+          name: twingate-connector
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 5
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2026-07-05T21:42:42Z"
+    generation: 2
+    labels:
+      app: twingate-connector
+      pod-template-hash: d7698558c
+    name: twingate-connector-d7698558c
+    namespace: twingate
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: twingate-connector
+      uid: f065e23c-8df8-4e30-bfde-5a14ce1fcb7d
+    resourceVersion: "25538620"
+    uid: 20f69610-c718-4408-a37f-b504baecb026
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: twingate-connector
+        pod-template-hash: d7698558c
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T21:42:42Z"
+        creationTimestamp: null
+        labels:
+          app: twingate-connector
+          pod-template-hash: d7698558c
+      spec:
+        containers:
+        - env:
+          - name: TWINGATE_ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_ACCESS_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_REFRESH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_REFRESH_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_NETWORK
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_NETWORK
+                name: twingate-connector-tokens
+          - name: TWINGATE_LOG_LEVEL
+            value: "3"
+          image: twingate/connector:1
+          imagePullPolicy: Always
+          name: twingate-connector
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: "2026-07-05T21:45:11Z"
+    generation: 2
+    labels:
+      app: twingate-connector
+      pod-template-hash: fcd85fb47
+    name: twingate-connector-fcd85fb47
+    namespace: twingate
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: twingate-connector
+      uid: f065e23c-8df8-4e30-bfde-5a14ce1fcb7d
+    resourceVersion: "25538656"
+    uid: d4209429-c2ff-46f4-b357-0326a8cf0937
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: twingate-connector
+        pod-template-hash: fcd85fb47
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T21:42:42Z"
+        creationTimestamp: null
+        labels:
+          app: twingate-connector
+          pod-template-hash: fcd85fb47
+      spec:
+        containers:
+        - env:
+          - name: TWINGATE_ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_ACCESS_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_REFRESH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_REFRESH_TOKEN
+                name: twingate-connector-tokens
+          - name: TWINGATE_NETWORK
+            valueFrom:
+              secretKeyRef:
+                key: TWINGATE_NETWORK
+                name: twingate-connector-tokens
+          - name: TWINGATE_LOG_LEVEL
+            value: "3"
+          image: twingate/connector:1.88.0
+          imagePullPolicy: Always
+          name: twingate-connector
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    creationTimestamp: "2026-07-05T21:40:18Z"
+    generation: 3
+    name: restart-twingate-connector
+    namespace: twingate
+    resourceVersion: "25538753"
+    uid: 19cfe218-0313-4a27-91c1-a858e88ecefd
+  spec:
+    concurrencyPolicy: Allow
+    failedJobsHistoryLimit: 1
+    jobTemplate:
+      metadata:
+        creationTimestamp: null
+        name: restart-twingate-connector
+      spec:
+        template:
+          metadata:
+            creationTimestamp: null
+          spec:
+            containers:
+            - command:
+              - kubectl
+              - -n
+              - twingate
+              - rollout
+              - restart
+              - deployment/twingate-connector
+              image: bitnami/kubectl:latest
+              imagePullPolicy: Always
+              name: restart-twingate-connector
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+            dnsPolicy: ClusterFirst
+            restartPolicy: OnFailure
+            schedulerName: default-scheduler
+            securityContext: {}
+            serviceAccount: twingate-restart
+            serviceAccountName: twingate-restart
+            terminationGracePeriodSeconds: 30
+    schedule: 0 4 * * *
+    successfulJobsHistoryLimit: 3
+    suspend: true
+  status:
+    lastSuccessfulTime: "2026-07-05T21:43:15Z"
+kind: List
+metadata:
+  resourceVersion: ""

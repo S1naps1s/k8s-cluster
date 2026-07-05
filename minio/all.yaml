@@ -1,0 +1,499 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/restartedAt: "2026-07-05T18:24:28-04:00"
+    creationTimestamp: "2026-07-05T22:24:28Z"
+    generateName: minio-65c796d85d-
+    generation: 1
+    labels:
+      app: minio
+      pod-template-hash: 65c796d85d
+    name: minio-65c796d85d-fd96p
+    namespace: minio
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: minio-65c796d85d
+      uid: c1430908-1622-491f-9e17-1535e0abeeaa
+    resourceVersion: "25546704"
+    uid: 4f6ccd80-0037-49ed-8649-9ae7e998b9a6
+  spec:
+    containers:
+    - args:
+      - server
+      - /data
+      - --console-address
+      - :9001
+      env:
+      - name: MINIO_ROOT_USER
+        value: admin
+      - name: MINIO_ROOT_PASSWORD
+        value: minio123
+      image: minio/minio:latest
+      imagePullPolicy: Always
+      name: minio
+      ports:
+      - containerPort: 9000
+        protocol: TCP
+      - containerPort: 9001
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /data
+        name: data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-r4xht
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: pi2-worker
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: data
+    - name: kube-api-access-r4xht
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T22:24:47Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T22:24:28Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T22:24:47Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T22:24:47Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T22:24:28Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://a11eb48c5542eda4ae457625cc819bbc43bd25dada167ce325aad8a4a670aaa0
+      image: docker.io/minio/minio:latest
+      imageID: docker.io/minio/minio@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
+      lastState: {}
+      name: minio
+      ready: true
+      resources: {}
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-07-05T22:24:46Z"
+      user:
+        linux:
+          gid: 0
+          supplementalGroups:
+          - 0
+          uid: 0
+      volumeMounts:
+      - mountPath: /data
+        name: data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-r4xht
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.1.5
+    hostIPs:
+    - ip: 192.168.1.5
+    phase: Running
+    podIP: 10.42.1.173
+    podIPs:
+    - ip: 10.42.1.173
+    qosClass: BestEffort
+    startTime: "2026-07-05T22:24:28Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"minio","namespace":"minio"},"spec":{"ports":[{"name":"api","nodePort":30903,"port":9000,"targetPort":9000},{"name":"console","nodePort":30904,"port":9001,"targetPort":9001}],"selector":{"app":"minio"},"type":"NodePort"}}
+    creationTimestamp: "2025-12-31T03:22:00Z"
+    name: minio
+    namespace: minio
+    resourceVersion: "83108"
+    uid: 739451d9-a264-4c61-bb33-e1e2c913f1a3
+  spec:
+    clusterIP: 10.43.168.87
+    clusterIPs:
+    - 10.43.168.87
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: api
+      nodePort: 30903
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    - name: console
+      nodePort: 30904
+      port: 9001
+      protocol: TCP
+      targetPort: 9001
+    selector:
+      app: minio
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"minio","namespace":"minio"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"minio"}},"template":{"metadata":{"labels":{"app":"minio"}},"spec":{"containers":[{"args":["server","/data","--console-address",":9001"],"env":[{"name":"MINIO_ROOT_USER","value":"admin"},{"name":"MINIO_ROOT_PASSWORD","value":"minio123"}],"image":"minio/minio:latest","name":"minio","ports":[{"containerPort":9000},{"containerPort":9001}],"volumeMounts":[{"mountPath":"/data","name":"data"}]}],"volumes":[{"emptyDir":{},"name":"data"}]}}}}
+    creationTimestamp: "2025-12-31T03:22:00Z"
+    generation: 3
+    name: minio
+    namespace: minio
+    resourceVersion: "25546719"
+    uid: a45e7016-71af-4843-8045-6ad877aefa80
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: minio
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T18:24:28-04:00"
+        creationTimestamp: null
+        labels:
+          app: minio
+      spec:
+        containers:
+        - args:
+          - server
+          - /data
+          - --console-address
+          - :9001
+          env:
+          - name: MINIO_ROOT_USER
+            value: admin
+          - name: MINIO_ROOT_PASSWORD
+            value: minio123
+          image: minio/minio:latest
+          imagePullPolicy: Always
+          name: minio
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          - containerPort: 9001
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-05T14:40:23Z"
+      lastUpdateTime: "2026-07-05T14:40:23Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-31T03:22:00Z"
+      lastUpdateTime: "2026-07-05T22:24:47Z"
+      message: ReplicaSet "minio-65c796d85d" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2026-07-05T22:00:05Z"
+    generation: 2
+    labels:
+      app: minio
+      pod-template-hash: 56b7d4fdd7
+    name: minio-56b7d4fdd7
+    namespace: minio
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: minio
+      uid: a45e7016-71af-4843-8045-6ad877aefa80
+    resourceVersion: "25546717"
+    uid: 8f6ee548-45ec-480a-82f6-2b64234db68d
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: minio
+        pod-template-hash: 56b7d4fdd7
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T18:00:05-04:00"
+        creationTimestamp: null
+        labels:
+          app: minio
+          pod-template-hash: 56b7d4fdd7
+      spec:
+        containers:
+        - args:
+          - server
+          - /data
+          - --console-address
+          - :9001
+          env:
+          - name: MINIO_ROOT_USER
+            value: admin
+          - name: MINIO_ROOT_PASSWORD
+            value: minio123
+          image: minio/minio:latest
+          imagePullPolicy: Always
+          name: minio
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          - containerPort: 9001
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: data
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2026-07-05T22:24:28Z"
+    generation: 1
+    labels:
+      app: minio
+      pod-template-hash: 65c796d85d
+    name: minio-65c796d85d
+    namespace: minio
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: minio
+      uid: a45e7016-71af-4843-8045-6ad877aefa80
+    resourceVersion: "25546705"
+    uid: c1430908-1622-491f-9e17-1535e0abeeaa
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: minio
+        pod-template-hash: 65c796d85d
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T18:24:28-04:00"
+        creationTimestamp: null
+        labels:
+          app: minio
+          pod-template-hash: 65c796d85d
+      spec:
+        containers:
+        - args:
+          - server
+          - /data
+          - --console-address
+          - :9001
+          env:
+          - name: MINIO_ROOT_USER
+            value: admin
+          - name: MINIO_ROOT_PASSWORD
+            value: minio123
+          image: minio/minio:latest
+          imagePullPolicy: Always
+          name: minio
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          - containerPort: 9001
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: data
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-31T03:22:00Z"
+    generation: 2
+    labels:
+      app: minio
+      pod-template-hash: 7c9c46584c
+    name: minio-7c9c46584c
+    namespace: minio
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: minio
+      uid: a45e7016-71af-4843-8045-6ad877aefa80
+    resourceVersion: "25540969"
+    uid: 2111ef4a-5118-4308-884f-2cefe0a4d30f
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: minio
+        pod-template-hash: 7c9c46584c
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: minio
+          pod-template-hash: 7c9c46584c
+      spec:
+        containers:
+        - args:
+          - server
+          - /data
+          - --console-address
+          - :9001
+          env:
+          - name: MINIO_ROOT_USER
+            value: admin
+          - name: MINIO_ROOT_PASSWORD
+            value: minio123
+          image: minio/minio:latest
+          imagePullPolicy: Always
+          name: minio
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          - containerPort: 9001
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: data
+  status:
+    observedGeneration: 2
+    replicas: 0
+kind: List
+metadata:
+  resourceVersion: ""

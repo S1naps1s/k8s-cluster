@@ -1,0 +1,958 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/restartedAt: "2026-07-05T19:06:32-04:00"
+    creationTimestamp: "2026-07-05T23:06:32Z"
+    generateName: n8n-7759c9767d-
+    generation: 1
+    labels:
+      app: n8n
+      pod-template-hash: 7759c9767d
+    name: n8n-7759c9767d-dqr5l
+    namespace: n8n
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: n8n-7759c9767d
+      uid: 0a5e7658-8a9f-4dcd-acfd-39c698343a3a
+    resourceVersion: "25553952"
+    uid: 619b77a4-ed68-4ae4-b16e-c2f4022d6461
+  spec:
+    containers:
+    - env:
+      - name: N8N_SECURE_COOKIE
+        value: "false"
+      - name: DB_TYPE
+        value: postgresdb
+      - name: DB_POSTGRESDB_HOST
+        value: shared-postgres.database.svc.cluster.local
+      - name: DB_POSTGRESDB_PORT
+        value: "5432"
+      - name: DB_POSTGRESDB_DATABASE
+        value: n8n
+      - name: DB_POSTGRESDB_USER
+        value: n8n
+      - name: DB_POSTGRESDB_PASSWORD
+        value: k4B!8tX9@Lm2Pq#7Rs
+      envFrom:
+      - configMapRef:
+          name: n8n-config
+      - secretRef:
+          name: n8n-secret
+      image: n8nio/n8n:latest
+      imagePullPolicy: Always
+      name: n8n
+      ports:
+      - containerPort: 5678
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /home/node/.n8n
+        name: n8n-data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-w2f8p
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: pi3-worker
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: n8n-data
+    - name: kube-api-access-w2f8p
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T23:06:34Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T23:06:32Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T23:06:34Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T23:06:34Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-07-05T23:06:32Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://02f44fd63379a0ab318bd0b21f127edc7eacac98821b4fd1691a8c51f3d7bde8
+      image: docker.io/n8nio/n8n:latest
+      imageID: docker.io/n8nio/n8n@sha256:f3284c9ad6892dc578dadd506d0969adc28046a5e010cb0c3bc892cae1ef292d
+      lastState: {}
+      name: n8n
+      ready: true
+      resources: {}
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-07-05T23:06:34Z"
+      user:
+        linux:
+          gid: 1000
+          supplementalGroups:
+          - 1000
+          uid: 1000
+      volumeMounts:
+      - mountPath: /home/node/.n8n
+        name: n8n-data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-w2f8p
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.1.107
+    hostIPs:
+    - ip: 192.168.1.107
+    phase: Running
+    podIP: 10.42.2.131
+    podIPs:
+    - ip: 10.42.2.131
+    qosClass: BestEffort
+    startTime: "2026-07-05T23:06:32Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"n8n","namespace":"n8n"},"spec":{"ports":[{"nodePort":30678,"port":5678,"protocol":"TCP","targetPort":5678}],"selector":{"app":"n8n"},"type":"NodePort"}}
+    creationTimestamp: "2025-12-30T19:38:56Z"
+    name: n8n
+    namespace: n8n
+    resourceVersion: "32530"
+    uid: 489adeee-f7e4-4478-ba51-97135973a93f
+  spec:
+    clusterIP: 10.43.9.30
+    clusterIPs:
+    - 10.43.9.30
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - nodePort: 30678
+      port: 5678
+      protocol: TCP
+      targetPort: 5678
+    selector:
+      app: n8n
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "9"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"n8n","namespace":"n8n"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"n8n"}},"template":{"metadata":{"labels":{"app":"n8n"}},"spec":{"containers":[{"envFrom":[{"configMapRef":{"name":"n8n-config"}},{"secretRef":{"name":"n8n-secret"}}],"image":"n8nio/n8n:latest","name":"n8n","ports":[{"containerPort":5678}],"volumeMounts":[{"mountPath":"/home/node/.n8n","name":"n8n-data"}]}],"volumes":[{"emptyDir":{},"name":"n8n-data"}]}}}}
+    creationTimestamp: "2025-12-30T19:38:56Z"
+    generation: 9
+    name: n8n
+    namespace: n8n
+    resourceVersion: "25553966"
+    uid: ba339f5d-0749-4c93-b2aa-4d28e555ac7e
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: n8n
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T19:06:32-04:00"
+        creationTimestamp: null
+        labels:
+          app: n8n
+      spec:
+        containers:
+        - env:
+          - name: N8N_SECURE_COOKIE
+            value: "false"
+          - name: DB_TYPE
+            value: postgresdb
+          - name: DB_POSTGRESDB_HOST
+            value: shared-postgres.database.svc.cluster.local
+          - name: DB_POSTGRESDB_PORT
+            value: "5432"
+          - name: DB_POSTGRESDB_DATABASE
+            value: n8n
+          - name: DB_POSTGRESDB_USER
+            value: n8n
+          - name: DB_POSTGRESDB_PASSWORD
+            value: k4B!8tX9@Lm2Pq#7Rs
+          envFrom:
+          - configMapRef:
+              name: n8n-config
+          - secretRef:
+              name: n8n-secret
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          name: n8n
+          ports:
+          - containerPort: 5678
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: n8n-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: n8n-data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-07-05T23:00:56Z"
+      lastUpdateTime: "2026-07-05T23:00:56Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-12-30T19:38:56Z"
+      lastUpdateTime: "2026-07-05T23:06:35Z"
+      message: ReplicaSet "n8n-7759c9767d" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 9
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2025-12-30T19:46:39Z"
+    generation: 2
+    labels:
+      app: n8n
+      pod-template-hash: 5f95cf6967
+    name: n8n-5f95cf6967
+    namespace: n8n
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: n8n
+      uid: ba339f5d-0749-4c93-b2aa-4d28e555ac7e
+    resourceVersion: "25542655"
+    uid: da57aca3-c55c-4bb3-a4bb-805acdbe4372
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: n8n
+        pod-template-hash: 5f95cf6967
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: n8n
+          pod-template-hash: 5f95cf6967
+      spec:
+        containers:
+        - env:
+          - name: N8N_SECURE_COOKIE
+            value: "false"
+          envFrom:
+          - configMapRef:
+              name: n8n-config
+          - secretRef:
+              name: n8n-secret
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          name: n8n
+          ports:
+          - containerPort: 5678
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: n8n-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: n8n-data
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "6"
+    creationTimestamp: "2026-07-05T22:53:24Z"
+    generation: 2
+    labels:
+      app: n8n
+      pod-template-hash: 65c6bd487f
+    name: n8n-65c6bd487f
+    namespace: n8n
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: n8n
+      uid: ba339f5d-0749-4c93-b2aa-4d28e555ac7e
+    resourceVersion: "25553294"
+    uid: 6274009a-5157-4bdd-8a36-2b214cb068f1
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: n8n
+        pod-template-hash: 65c6bd487f
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T18:35:39-04:00"
+        creationTimestamp: null
+        labels:
+          app: n8n
+          pod-template-hash: 65c6bd487f
+      spec:
+        containers:
+        - env:
+          - name: N8N_SECURE_COOKIE
+            value: "false"
+          - name: DB_TYPE
+            value: postgresdb
+          - name: DB_POSTGRESDB_HOST
+            value: shared-postgres.database.svc.cluster.local
+          - name: DB_POSTGRESDB_PORT
+            value: "5432"
+          - name: DB_POSTGRESDB_DATABASE
+            value: n8n
+          - name: DB_POSTGRESDB_USER
+            value: n8n
+          envFrom:
+          - configMapRef:
+              name: n8n-config
+          - secretRef:
+              name: n8n-secret
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          name: n8n
+          ports:
+          - containerPort: 5678
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: n8n-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: n8n-data
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "7"
+    creationTimestamp: "2026-07-05T23:00:54Z"
+    generation: 2
+    labels:
+      app: n8n
+      pod-template-hash: 67c9c6754
+    name: n8n-67c9c6754
+    namespace: n8n
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: n8n
+      uid: ba339f5d-0749-4c93-b2aa-4d28e555ac7e
+    resourceVersion: "25553350"
+    uid: ce968fd6-4a8a-45c5-bb39-4b751f9acf42
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: n8n
+        pod-template-hash: 67c9c6754
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T18:35:39-04:00"
+        creationTimestamp: null
+        labels:
+          app: n8n
+          pod-template-hash: 67c9c6754
+      spec:
+        containers:
+        - env:
+          - name: N8N_SECURE_COOKIE
+            value: "false"
+          - name: DB_TYPE
+            value: postgresdb
+          - name: DB_POSTGRESDB_HOST
+            value: shared-postgres.database.svc.cluster.local
+          - name: DB_POSTGRESDB_PORT
+            value: "5432"
+          - name: DB_POSTGRESDB_DATABASE
+            value: n8n
+          - name: DB_POSTGRESDB_USER
+            value: n8n
+          - name: DB_POSTGRESDB_PASSWORD
+            value: k4B!8tX9@Lm2Pq#7Rs
+          envFrom:
+          - configMapRef:
+              name: n8n-config
+          - secretRef:
+              name: n8n-secret
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          name: n8n
+          ports:
+          - containerPort: 5678
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: n8n-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: n8n-data
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "9"
+    creationTimestamp: "2026-07-05T23:06:32Z"
+    generation: 1
+    labels:
+      app: n8n
+      pod-template-hash: 7759c9767d
+    name: n8n-7759c9767d
+    namespace: n8n
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: n8n
+      uid: ba339f5d-0749-4c93-b2aa-4d28e555ac7e
+    resourceVersion: "25553955"
+    uid: 0a5e7658-8a9f-4dcd-acfd-39c698343a3a
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: n8n
+        pod-template-hash: 7759c9767d
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T19:06:32-04:00"
+        creationTimestamp: null
+        labels:
+          app: n8n
+          pod-template-hash: 7759c9767d
+      spec:
+        containers:
+        - env:
+          - name: N8N_SECURE_COOKIE
+            value: "false"
+          - name: DB_TYPE
+            value: postgresdb
+          - name: DB_POSTGRESDB_HOST
+            value: shared-postgres.database.svc.cluster.local
+          - name: DB_POSTGRESDB_PORT
+            value: "5432"
+          - name: DB_POSTGRESDB_DATABASE
+            value: n8n
+          - name: DB_POSTGRESDB_USER
+            value: n8n
+          - name: DB_POSTGRESDB_PASSWORD
+            value: k4B!8tX9@Lm2Pq#7Rs
+          envFrom:
+          - configMapRef:
+              name: n8n-config
+          - secretRef:
+              name: n8n-secret
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          name: n8n
+          ports:
+          - containerPort: 5678
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: n8n-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: n8n-data
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-12-30T19:38:56Z"
+    generation: 2
+    labels:
+      app: n8n
+      pod-template-hash: 796947778f
+    name: n8n-796947778f
+    namespace: n8n
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: n8n
+      uid: ba339f5d-0749-4c93-b2aa-4d28e555ac7e
+    resourceVersion: "33245"
+    uid: b551915b-6edf-46b0-9904-ae95822197ec
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: n8n
+        pod-template-hash: 796947778f
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: n8n
+          pod-template-hash: 796947778f
+      spec:
+        containers:
+        - envFrom:
+          - configMapRef:
+              name: n8n-config
+          - secretRef:
+              name: n8n-secret
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          name: n8n
+          ports:
+          - containerPort: 5678
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: n8n-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: n8n-data
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2026-07-05T22:01:58Z"
+    generation: 2
+    labels:
+      app: n8n
+      pod-template-hash: 7cb764dbd8
+    name: n8n-7cb764dbd8
+    namespace: n8n
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: n8n
+      uid: ba339f5d-0749-4c93-b2aa-4d28e555ac7e
+    resourceVersion: "25547730"
+    uid: 9debb012-7577-44eb-9424-beb64f6c467a
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: n8n
+        pod-template-hash: 7cb764dbd8
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T18:01:58-04:00"
+        creationTimestamp: null
+        labels:
+          app: n8n
+          pod-template-hash: 7cb764dbd8
+      spec:
+        containers:
+        - env:
+          - name: N8N_SECURE_COOKIE
+            value: "false"
+          envFrom:
+          - configMapRef:
+              name: n8n-config
+          - secretRef:
+              name: n8n-secret
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          name: n8n
+          ports:
+          - containerPort: 5678
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: n8n-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: n8n-data
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "5"
+    creationTimestamp: "2026-07-05T22:35:39Z"
+    generation: 2
+    labels:
+      app: n8n
+      pod-template-hash: 847f4479fb
+    name: n8n-847f4479fb
+    namespace: n8n
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: n8n
+      uid: ba339f5d-0749-4c93-b2aa-4d28e555ac7e
+    resourceVersion: "25552212"
+    uid: 049db438-4d55-4b10-af0c-8e240b20eb7c
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: n8n
+        pod-template-hash: 847f4479fb
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T18:35:39-04:00"
+        creationTimestamp: null
+        labels:
+          app: n8n
+          pod-template-hash: 847f4479fb
+      spec:
+        containers:
+        - env:
+          - name: N8N_SECURE_COOKIE
+            value: "false"
+          envFrom:
+          - configMapRef:
+              name: n8n-config
+          - secretRef:
+              name: n8n-secret
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          name: n8n
+          ports:
+          - containerPort: 5678
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: n8n-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: n8n-data
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2026-07-05T22:27:45Z"
+    generation: 2
+    labels:
+      app: n8n
+      pod-template-hash: cdff8f6f8
+    name: n8n-cdff8f6f8
+    namespace: n8n
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: n8n
+      uid: ba339f5d-0749-4c93-b2aa-4d28e555ac7e
+    resourceVersion: "25551385"
+    uid: d0fe9278-b081-405a-a4ea-95234bb71991
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: n8n
+        pod-template-hash: cdff8f6f8
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T18:27:45-04:00"
+        creationTimestamp: null
+        labels:
+          app: n8n
+          pod-template-hash: cdff8f6f8
+      spec:
+        containers:
+        - env:
+          - name: N8N_SECURE_COOKIE
+            value: "false"
+          envFrom:
+          - configMapRef:
+              name: n8n-config
+          - secretRef:
+              name: n8n-secret
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          name: n8n
+          ports:
+          - containerPort: 5678
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: n8n-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: n8n-data
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "8"
+    creationTimestamp: "2026-07-05T23:01:01Z"
+    generation: 2
+    labels:
+      app: n8n
+      pod-template-hash: d7c94477
+    name: n8n-d7c94477
+    namespace: n8n
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: n8n
+      uid: ba339f5d-0749-4c93-b2aa-4d28e555ac7e
+    resourceVersion: "25553963"
+    uid: be3c7cc7-c318-463c-a72b-f76d9ba3be4b
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: n8n
+        pod-template-hash: d7c94477
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-05T19:01:01-04:00"
+        creationTimestamp: null
+        labels:
+          app: n8n
+          pod-template-hash: d7c94477
+      spec:
+        containers:
+        - env:
+          - name: N8N_SECURE_COOKIE
+            value: "false"
+          - name: DB_TYPE
+            value: postgresdb
+          - name: DB_POSTGRESDB_HOST
+            value: shared-postgres.database.svc.cluster.local
+          - name: DB_POSTGRESDB_PORT
+            value: "5432"
+          - name: DB_POSTGRESDB_DATABASE
+            value: n8n
+          - name: DB_POSTGRESDB_USER
+            value: n8n
+          - name: DB_POSTGRESDB_PASSWORD
+            value: k4B!8tX9@Lm2Pq#7Rs
+          envFrom:
+          - configMapRef:
+              name: n8n-config
+          - secretRef:
+              name: n8n-secret
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          name: n8n
+          ports:
+          - containerPort: 5678
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /home/node/.n8n
+            name: n8n-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: n8n-data
+  status:
+    observedGeneration: 2
+    replicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
